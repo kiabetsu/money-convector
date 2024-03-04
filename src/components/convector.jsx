@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FaRightLeft } from "react-icons/fa6";
-import getData from "../service";
 
 function Convector(props) {
+    console.log("convector ", props);
     const [valueStart, setValueStart] = useState();
-    const currencies = ["USD", "RUB", "EUR"];
+    const [currencies, setCurrencies] = useState([]);
+
     const [inputCurrency, setInputCurrency] = useState(0);
     const [outputCurrency, setOutputCurrency] = useState(0);
     const [valueFinal, setValueFinal] = useState(0);
 
     useEffect(() => {
-        console.log("props", props.dataMoney);
-        getData();
+        if (props.moneys.length > 0) {
+            let cur = props.moneys[0].currencies.map((item) => item.currency);
+            cur.push("RUB");
+            setCurrencies(cur);
+        }
         const postAPI = (value, inCur, outCur) => {
             let coef1;
             switch (inCur) {
@@ -41,7 +45,7 @@ function Convector(props) {
         };
 
         setValueFinal(postAPI(valueStart, inputCurrency, outputCurrency));
-    }, [valueStart, inputCurrency, outputCurrency]);
+    }, [valueStart, inputCurrency, outputCurrency, props.moneys]);
 
     return (
         <div className="converter-container">

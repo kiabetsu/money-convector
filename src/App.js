@@ -11,6 +11,7 @@ function App() {
 
     useEffect(() => {
         getData().then((data) => {
+            console.log("data:", data);
             setMoneys(data);
         });
     }, []);
