@@ -2,44 +2,33 @@ import React, { useEffect, useState } from "react";
 import { FaRightLeft } from "react-icons/fa6";
 
 function Convector(props) {
-    console.log("convector ", props);
+    const [moneyObj, setMoneyObj] = useState([]);
     const [valueStart, setValueStart] = useState();
     const [currencies, setCurrencies] = useState([]);
-
-    const [inputCurrency, setInputCurrency] = useState(0);
-    const [outputCurrency, setOutputCurrency] = useState(0);
+    const [inputCurrency, setInputCurrency] = useState("RUB");
+    const [outputCurrency, setOutputCurrency] = useState("USD");
     const [valueFinal, setValueFinal] = useState(0);
 
     useEffect(() => {
         if (props.moneys.length > 0) {
-            let cur = props.moneys[0].currencies.map((item) => item.currency);
-            cur.push("RUB");
-            setCurrencies(cur);
+            let curObj = props.moneys[0].currencies.map((item) => item);
+            curObj.push({ currency: "RUB", value: 1 });
+            setMoneyObj(curObj);
+            setCurrencies(curObj.map((item) => item.currency));
         }
         const postAPI = (value, inCur, outCur) => {
             let coef1;
-            switch (inCur) {
-                case 0:
-                    coef1 = 100;
-                    break;
-                case 1:
-                    coef1 = 40;
-                    break;
-                case 2:
-                    coef1 = 50;
-                    break;
+            console.log("dsadasdasdasdasd", moneyObj);
+            for (let i = 0; i < moneyObj.length; i++) {
+                if (inCur === moneyObj[i].currency) {
+                    coef1 = moneyObj[i].value;
+                }
             }
             let coef2;
-            switch (outCur) {
-                case 0:
-                    coef2 = 100;
-                    break;
-                case 1:
-                    coef2 = 40;
-                    break;
-                case 2:
-                    coef2 = 50;
-                    break;
+            for (let i = 0; i < moneyObj.length; i++) {
+                if (outCur === moneyObj[i].currency) {
+                    coef2 = moneyObj[i].value;
+                }
             }
             return (value * coef1) / coef2;
         };
@@ -57,7 +46,8 @@ function Convector(props) {
                 />
                 <select
                     className="select-currency"
-                    onChange={(e) => setInputCurrency(e.target.selectedIndex)}
+                    onChange={(e) => setInputCurrency(e.target.value)}
+                    value={inputCurrency}
                 >
                     {currencies.map((e, i) => (
                         <option key={i}>{e}</option>
@@ -74,7 +64,8 @@ function Convector(props) {
                 />
                 <select
                     className="select-currency"
-                    onChange={(e) => setOutputCurrency(e.target.selectedIndex)}
+                    onChange={(e) => setOutputCurrency(e.target.value)}
+                    value={outputCurrency}
                 >
                     {currencies.map((e, i) => (
                         <option key={i}>{e}</option>
