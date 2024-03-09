@@ -28,6 +28,10 @@ const getData = async () => {
                     value: Number((1 / data.rub[x]).toFixed(2)),
                 };
             });
+            obj.currencies.push({
+                currency: "RUB",
+                value: 1,
+            });
             newMoney.push(obj);
         } catch {}
     }

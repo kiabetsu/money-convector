@@ -4,7 +4,6 @@ import strftime from "strftime";
 import getData from "../service";
 
 function Exchange_rates({ moneys }) {
-    console.log(moneys);
     return (
         <div className="exchange-table">
             <div className="table-header">

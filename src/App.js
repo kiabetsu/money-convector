@@ -8,6 +8,8 @@ import getData from "./service";
 
 function App() {
     const [moneys, setMoneys] = useState([]);
+    const [inputCurrency, setInputCurrency] = useState("RUB");
+    const [outputCurrency, setOutputCurrency] = useState("USD");
 
     useEffect(() => {
         getData().then((data) => {
@@ -22,8 +24,18 @@ function App() {
 
             {/* <Header /> */}
             <Exchange_rates moneys={moneys} />
-            <Convector moneys={moneys} />
-            <Chart moneys={moneys} />
+            <Convector
+                moneys={moneys}
+                setInputCurrency={setInputCurrency}
+                inputCurrency={inputCurrency}
+                setOutputCurrency={setOutputCurrency}
+                outputCurrency={outputCurrency}
+            />
+            <Chart
+                moneys={moneys}
+                outputCurrency={outputCurrency}
+                inputCurrency={inputCurrency}
+            />
         </div>
     );
 }

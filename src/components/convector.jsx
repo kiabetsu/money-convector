@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FaRightLeft } from "react-icons/fa6";
 
-function Convector(props) {
+function Convector({
+    moneys,
+    setInputCurrency,
+    inputCurrency,
+    setOutputCurrency,
+    outputCurrency,
+}) {
     const [moneyObj, setMoneyObj] = useState([]);
     const [valueStart, setValueStart] = useState();
     const [currencies, setCurrencies] = useState([]);
-    const [inputCurrency, setInputCurrency] = useState("RUB");
-    const [outputCurrency, setOutputCurrency] = useState("USD");
     const [valueFinal, setValueFinal] = useState(0);
 
     useEffect(() => {
-        if (props.moneys.length > 0) {
-            let curObj = props.moneys[0].currencies.map((item) => item);
+        if (moneys.length > 0) {
+            let curObj = moneys[0].currencies.map((item) => item);
             curObj.push({ currency: "RUB", value: 1 });
             setMoneyObj(curObj);
             setCurrencies(curObj.map((item) => item.currency));
@@ -34,7 +38,7 @@ function Convector(props) {
         };
 
         setValueFinal(postAPI(valueStart, inputCurrency, outputCurrency));
-    }, [valueStart, inputCurrency, outputCurrency, props.moneys]);
+    }, [valueStart, inputCurrency, outputCurrency, moneys]);
 
     return (
         <div className="converter-container">
@@ -59,7 +63,7 @@ function Convector(props) {
                 <input
                     type="text"
                     className="input-value"
-                    value={!isNaN(valueFinal) ? valueFinal : ""}
+                    value={!isNaN(valueFinal) ? valueFinal.toFixed(2) : ""}
                     readOnly
                 />
                 <select

@@ -1,0 +1,14 @@
+.chart-box {
+    width: 50%;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: #f1f1f163;
+    border-radius: 0.0em;
+    border-collapse: collapse;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.078);
+    backdrop-filter: blur(10px);
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
